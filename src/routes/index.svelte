@@ -1,64 +1,52 @@
 <script>
+	import { onDestroy, onMount } from 'svelte';
 	import { send, receive } from "crossfade";
+	import { fade } from 'svelte/transition';
+
+	let showIndex = false;
+	let showIndexContent = false;
+	let relatedContentItems = [1,2,3,4];
+
+	onMount(() => {
+		//show some outter content
+		showIndex = true;
+		showIndexContent = true;
+	});
 </script>
 
 <style>
-	h1,
-	figure,
-	p {
-	  text-align: center;
-	  margin: 0 auto;
+	.smrtr-index-wrapper {
+		padding: 15px 25px 40px 25px;
+		margin-top:0px;
+		animation-name: example;
+		animation-duration: 1s;
+		animation-fill-mode: forwards;
+		opacity:0;
 	}
-
-	h1 {
-	  font-size: 2.8em;
-	  text-transform: uppercase;
-	  font-weight: 700;
-	  margin: 0 0 0.5em 0;
-	}
-
-	h1 span {
-	  position: relative;
-	  display: inline-block;
-	}
-
-	figure {
-	  margin: 0 0 1em 0;
-	}
-
-	img {
-	  width: 100%;
-	  max-width: 200px;
-	}
-
-	p {
-	  margin: 1em auto;
-	}
-
-	@media (min-width: 480px) {
-	  h1 {
-	    font-size: 4em;
-	  }
+	@keyframes example {
+		from {margin-top: 100px; opacity:0;}
+		to {margin-top: 0px; opacity:1;}
 	}
 </style>
+<svelte:head>
+	<title>index:: Article :: Atlas</title>
+</svelte:head>
 
-<main>
-<h1>
-  <span out:send="{{key: 'title'}}" in:receive="{{key: 'title'}}">INDEX PAGE</span>
-</h1>
+<section class="wrapper section">
+	<h1>
+	<span out:send="{{key: undefined}}" in:receive="{{key: undefined}}">INDEX PAGE</span>
+	</h1>
 
-<figure>
-	<img out:send="{{key: 'borat'}}" in:receive="{{key: 'borat'}}" alt='Meow' src='meow.png'>
-	<figcaption>MEOW!</figcaption>
-</figure>
-
-<p out:send="{{key: 'text'}}" in:receive="{{key: 'text'}}">
-  Hi I'm
-	<strong>
-		 <a href="https://twitter.com/buhrmidayo">buhrmi</a>
-	</strong>
-	and I made this for you.
-	Come say hi.
-</p>
-
-</main>
+	{#if showIndex}
+		<article class="smrtr-index-wrapper pageTransition" in:fade="{{delay: 200}}" out:fade>
+			index
+		</article>
+		{#if (showIndexContent)}
+			<div in:fade="{{delay: 1400}}" out:fade>
+			{#each relatedContentItems as item, i}
+				hello World
+			{/each}
+			</div>
+		{/if}
+	{/if}
+</section>
