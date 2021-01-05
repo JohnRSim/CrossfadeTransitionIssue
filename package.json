@@ -15,7 +15,7 @@
     "test": "run-p --race dev cy:run"
   },
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "compression": "^1.7.1",
     "lory.js": "git+https://github.com/loryjs/lory.git",
     "lottie-web": "^5.6.0",
